@@ -1,13 +1,13 @@
-import './ProductList.css'
-import ProductItem from '../../components/ProductItem';
-export default function ProductList({ productItem }) {
+// import './ProductList.css'
+import ProductItem from '../ProductItem/productItem';
+
+export default function ProductList({ productItem, productAddToCart }) {
     const products = productItem.map(product => 
     <ProductItem 
         key={product.id}
         productItem={product}
         productAddToCart={productAddToCart}
     />
-
 
     )
     return(
