@@ -8,10 +8,15 @@ export default function NavBar({user,setUser}) {
   }
   return (
     <nav>
-      <Link to="/orders">Order History</Link>
+      <Link to="/orders">Orders</Link>
       &nbsp; | &nbsp;
-      <Link to="/orders/new">New Order</Link>
+      <Link to="/orders/orderdetail">Order Details</Link>
       <p>Welcome,{user.name.toUpperCase()}</p>
+      &nbsp; | &nbsp;
+      <Link to="#">
+        {/* include icon for cart  */}
+        {/* <img src></img> */}
+      </Link>
       &nbsp; | &nbsp;
       <Link to="#" onClick={handleLogOut}>Log Out</Link>
     </nav>
