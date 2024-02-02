@@ -16,6 +16,7 @@ export function productQuanityChange(productID, productQuantity) {
   return sendRequest(`${BASE_URL}/cart/qty`, 'PUT', { productID, productQuantity });
 }
 
-export function productQtyInCart(itemId, newQty) {
-  return sendRequest(`${BASE_URL}/cart/qty`, 'PUT', { itemId, newQty });
+export function productQtyInCart(productID, newQty) {
+  return sendRequest(`${BASE_URL}/cart/qty`, 'PUT', { productID, newQty });
 }
+

@@ -18,6 +18,7 @@ export default function Product() {
         getProducts();
     });
 
+    
     return(
         <main>
             <Category
@@ -30,8 +31,6 @@ export default function Product() {
                 product={product}
                 setProductItem={SetProductItem}
             />
-
-
         </main>
     )
 }
