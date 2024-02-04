@@ -12,7 +12,10 @@ export default function ProductList({ productItem, productAddToCart }) {
     )
     return(
         <main className="ProductList">
+            <div className="product-list-index">
             {products}
+            </div>
+            <h1>Product List</h1>
         </main>
     );
 }

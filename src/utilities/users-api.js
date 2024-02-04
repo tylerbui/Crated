@@ -8,7 +8,7 @@ export async function signUp(userData) {
 }
 
 export async function login(credentials) {
-  return sendRequest(`${BASE_URL}/login}`,'POST', credentials)
+  return sendRequest(`${BASE_URL}/login`,'POST', credentials)
 }
 
 export function checkToken() {

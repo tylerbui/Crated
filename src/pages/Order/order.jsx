@@ -1,13 +1,16 @@
-
 import * as ordersAPI from '../../utilities/orders-api';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import {Link} from 'react-router-dom';
 import OrderDetail from '../../components/OrderDetail/OrderDetail';
-import { checkout } from '../../../routes/api/orders';
+import Category from '../../components/Category/Category';
+import UserLogOut from '../../components/UserLogOut/UserLogOut';
 
 
-export default function Order() {
+
+export default function Order({activeCat,setActiveCat,user,setUser,checkout}) {
     //state
     const [cart, setCart] = useState(null);
+    const categoriesRef = useRef('');
     
       async function getCart() {
         const cart = await ordersAPI.getCart();
@@ -22,7 +25,7 @@ export default function Order() {
       }
 
       async function productRemoveFromCart(productID){
-        const removeFromCart = cart.products.findByIndex(product => product.id == productID);
+        const removeFromCart = cart.products.findByIndex(product => product.id === productID);
         if (removeFromCart !== 1){
           cart.product.splice(removeFromCart, 1);
         } else {
@@ -39,12 +42,13 @@ export default function Order() {
         <main className="order-page">
             
             <aside>
-            <CategoryList
+            <Category
               categories={categoriesRef.current}
               activeCat={activeCat}
               setActiveCat={setActiveCat}
             />
-            <ProductList />
+            <Link to="/orders" className="button btn-sm">PREVIOUS ORDERS</Link>
+            <UserLogOut user={user} setUser={setUser} />
             <OrderDetail
               order={cart}
               productAddToCart={productAddToCart}

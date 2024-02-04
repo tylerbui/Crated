@@ -8,6 +8,8 @@ export default function NavBar({user,setUser}) {
   }
   return (
     <nav>
+      <Link to="/product">Products</Link>
+      &nbsp; | &nbsp;
       <Link to="/orders">Orders</Link>
       &nbsp; | &nbsp;
       <Link to="/orders/orderdetail">Order Details</Link>
