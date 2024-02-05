@@ -5,7 +5,9 @@
   grid-template-rows: 1fr;
   background-color: var(--white);
   border-radius: 2vmin;
-  margin-top: 30px;
+  margin-top: 30px 10px 10px 10px;
+  padding: 3vmin;
+  overflow-y: scroll;
 }
 
 .Category aside {

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const itemSchema = require('./itemSchema');
+const productSchema = require('./productSchema');
 
 const lineItemSchema = new Schema({
   qty: { type: Number, default: 1 },
@@ -15,7 +15,7 @@ lineItemSchema.virtual('extPrice').get(function() {
   return this.qty * this.product.price;
 });
 
-const orderSchema = new Schema({
+const cartSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -28,31 +28,31 @@ const orderSchema = new Schema({
   toJSON: { virtuals: true }
 });
 
-orderSchema.virtual('orderTotal').get(function() {
-  return this.lineItems.reduce((total, product) => total + item.extPrice, 0);
+cartSchema.virtual('cartTotal').get(function() {
+  return this.lineItems.reduce((total, product) => total + product.extPrice, 0);
 });
 
-orderSchema.virtual('orderQty').get(function() {
+cartSchema.virtual('cartQty').get(function() {
   return this.lineItems.reduce((total, product) => total + product.qty, 0);
 });
 
-orderSchema.virtual('orderId').get(function() {
+cartSchema.virtual('cartId').get(function() {
   return this.id.slice(-6).toUpperCase();
 });
 
-orderSchema.statics.getCart = function(userId) {
+cartSchema.statics.getCart = function(userId) {
   return this.findOneAndUpdate(
     // query object
     { user: userId, isPaid: false },
     // update doc - provides values when inserting
-    { user: userId },
+    { user: userId, isPaid: false },
     // upsert option
     { upsert: true, new: true }
   );
 };
 
 // Instance method for adding an item to a cart (unpaid order)
-orderSchema.methods.addItemToCart = async function (productID) {
+cartSchema.methods.productAddToCart = async function (productID) {
   // 'this' keyword is bound to the cart (order doc)
   const cart = this;
   // Check if the item already exists in the cart
@@ -63,8 +63,8 @@ orderSchema.methods.addItemToCart = async function (productID) {
   } else {
     // Get the item from the "catalog"
     // Note how the mongoose.model method behaves as a getter when passed one arg vs. two
-    const Item = mongoose.model('product');
-    const item = await Product.findById(productID);
+    const Product = mongoose.model('product');
+    const product = await Product.findById(productID);
     // The qty of the new lineItem object being pushed in defaults to 1
     cart.lineItems.push({ product });
   }
@@ -73,11 +73,11 @@ orderSchema.methods.addItemToCart = async function (productID) {
 };
 
 // Instance method to set an item's qty in the cart
-orderSchema.methods.setItemQty = function(productID, newQty) {
+cartSchema.methods.setItemQty = function(productID, newQty) {
   // this keyword is bound to the cart (order doc)
   const cart = this;
   // Find the line item in the cart for the menu item
-  const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId));
+  const lineItem = cart.lineItems.find(lineItem => lineItem.product._id.equals(productID));
   if (lineItem && newQty <= 0) {
     // Calling deleteOne, removes the lineItem subdoc from the cart.lineItems array
     lineItem.deleteOne();
@@ -89,4 +89,4 @@ orderSchema.methods.setItemQty = function(productID, newQty) {
   return cart.save();
 };
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model('Cart', cartSchema);

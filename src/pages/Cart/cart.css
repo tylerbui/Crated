@@ -1,0 +1,43 @@
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.cart-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding:20px;
+  } 
+
+
+aside {
+    width: 70%;
+    margin-left: 20px;
+}
+
+.category-section {
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.checkout-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #27ae60;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  display: inline-block;
+  transition: background-color 0.3s;
+}

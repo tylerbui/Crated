@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
@@ -8,6 +9,7 @@ require('dotenv').config();
 require('./config/database');
 
 const app = express();
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -22,9 +24,10 @@ app.use(require('./config/checkToken'));
 
 const port = process.env.PORT || 3001;
 
-// Put API routes here, before the "catch all" route
 app.use('/api/users', require('./routes/api/users'));
-app.use('/api/orders', require('./routes/api/orders'));
+// Put API routes here, before the "catch all" route
+const ensureLoggedIn = require('./config/ensureLoggedIn')
+app.use('/api/carts', ensureLoggedIn, require('./routes/api/carts'));
 app.use('/api/products', require('./routes/api/products'));
 
 

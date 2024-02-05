@@ -1,11 +1,10 @@
-export default function ProductItem({ productItem, productAddToCart }) {
-    // Check if productItem exists
-    if (!productItem) {
-      return null; // or handle the case where productItem is not available
+import './productItem.css';
+export default function ProductItem({ product, productAddToCart }) {
+
+    if (!product) {
+      return null; 
     }
-  
-    // Destructure productItem properties
-    const { name, description, price, category } = productItem;
+    const { name, description, price, category } = product;
   
     return (
       <div className="ProductItem">
@@ -15,7 +14,7 @@ export default function ProductItem({ productItem, productAddToCart }) {
           <span className="productPrice">${(price || 0).toFixed(2)}</span>
         </div>
         <div className="productCategory">{category || 'No Category'}</div>
-        <button className="btn-product-cartadd" onClick={() => productAddToCart(productItem._id)}>
+        <button className="btn-product-cartadd" onClick={() => productAddToCart(product._id)}>
           Add to Cart
         </button>
       </div>

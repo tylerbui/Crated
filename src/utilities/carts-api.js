@@ -1,15 +1,15 @@
 import sendRequest from './send-request';
 
-const BASE_URL = '/api/orders';
+const BASE_URL = '/api/cart';
 
 // Retrieve an unpaid order for the logged in user
 export function getCart() {
-  return sendRequest(`${BASE_URL}/cart`);
+  return sendRequest(BASE_URL);
 }
 
 export function productAddToCart(productID) {
   // Just send itemId for best security (no pricing)
-  return sendRequest(`${BASE_URL}/cart/products/${productID}}`, 'POST');
+  return sendRequest(`${BASE_URL}/products/${productID}`, 'POST');
 }
 
 export function productQuanityChange(productID, productQuantity) {
