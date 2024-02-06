@@ -8,6 +8,9 @@ require('dotenv').config();
 // Connect to the database
 require('./config/database');
 
+const Product = require('./models/product');
+
+
 const app = express();
 app.use(cors());
 
@@ -29,6 +32,7 @@ app.use('/api/users', require('./routes/api/users'));
 const ensureLoggedIn = require('./config/ensureLoggedIn')
 app.use('/api/carts', ensureLoggedIn, require('./routes/api/carts'));
 app.use('/api/products', require('./routes/api/products'));
+
 
 
 // The following "catch all" route (note the *) is necessary

@@ -1,10 +1,10 @@
 import LineItem from "../LineItem/LineItem";
 
 export default function cartDetail({cart,productQuantityChange,checkout}) {
-    if(!cart){
-        console.error('Cart is undefined or null.');
-        return null;
-    }
+  if (!cart || !cart.products || cart.products.length === 0) {
+    return <p>Your cart is empty.</p>;
+  }
+
     const lineItems = cart.lineItems.map(product =>
         <LineItem
             lineItem={product}

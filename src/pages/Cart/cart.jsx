@@ -1,9 +1,10 @@
 import * as cartsAPI from '../../utilities/carts-api';
 import { useState, useRef, useEffect } from 'react';
 import {Link} from 'react-router-dom';
+import ProductList from '../../components/ProductList/ProductList';
 import CartDetail from '../../components/CartDetail/cartDetail';
 import Category from '../../components/Category/Category';
-
+import LineItem from '../../components/LineItem/LineItem';
 
 
 export default function Cart({activeCat,setActiveCat,checkout}) {
@@ -41,6 +42,7 @@ export default function Cart({activeCat,setActiveCat,checkout}) {
         setCart(cartUpdate);
       }
 
+
     return(
         <main className="cart-page">
             <h1>Cart Page</h1>
@@ -52,17 +54,17 @@ export default function Cart({activeCat,setActiveCat,checkout}) {
                 setActiveCat={setActiveCat}
               />
               </div>
-            <Link to="/cart" className="button btn-sm">PREVIOUS ORDERS</Link>
-            <button className="checkout-button" onClick={() => checkout(cart)}>
-              CHECKOUT
-            </button>
+            <Link to="/carts" className="button btn-sm">PREVIOUS ORDERS</Link>
             <CartDetail
-              cart={cart}
-              productAddToCart={productAddToCart}
+              cart={cart} 
               productQuantityChange={productQuantityChange}
               productRemoveFromCart={productRemoveFromCart}
               checkout={checkout}
               />
+            <LineItem />
+            <button className="checkout-button" onClick={() => checkout(cart)}>
+              CHECKOUT
+            </button>
             </aside>
         </main>
     )

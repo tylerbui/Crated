@@ -16,18 +16,12 @@ export default function Product() {
     useEffect(() => {
         (async () => {
           try {
-            const products = await productAPI.getAllProducts({
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              }
-            });
-      
+            const products = await productAPI.getAllProducts();
             categoriesRef.current = [...new Set(products.map(product => product.category.name))];
             setProduct(products);
             setActiveCat(categoriesRef.current[0]);
           } catch (error) {
-            // Handle and log any errors here
+           
             console.error('Error fetching products:', error);
           }
         })();
@@ -44,7 +38,7 @@ export default function Product() {
                 />} 
             </aside>
             <ProductList 
-            product={product.filter((product) => product.category.name === activeCat)} 
+              product={product.filter((product) => product.category.name === activeCat)} 
             />
             <Link to="/carts" className="carts"></Link>
         </main>

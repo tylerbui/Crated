@@ -1,9 +1,9 @@
 import './productItem.css';
-export default function ProductItem({ product, productAddToCart }) {
+import * as cartAPI from '../../utilities/carts-api';
 
-    if (!product) {
-      return null; 
-    }
+
+export default function ProductItem({ product, productAddToCart}) {
+
     const { name, description, price, category } = product;
   
     return (
@@ -13,9 +13,9 @@ export default function ProductItem({ product, productAddToCart }) {
         <div className="purchased">
           <span className="productPrice">${(price || 0).toFixed(2)}</span>
         </div>
-        <div className="productCategory">{category || 'No Category'}</div>
+        <div className="productCategory">{category.name || 'No Category'}</div>
         <button className="btn-product-cartadd" onClick={() => productAddToCart(product._id)}>
-          Add to Cart
+          Add to Cart 
         </button>
       </div>
     );

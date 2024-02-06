@@ -1,13 +1,10 @@
 .LineItem {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 3vw 15.35vw 5.75vw 5.25vw;
-    padding: 1vmin 0;
-    color: var(--text-light);
-    background-color: var(--white);
-    border-top: .1vmin solid var(--tan-3);
-    font-size: 1.5vw;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
   
   .LineItem:last-child {
     border-bottom: .1vmin solid var(--tan-3);
@@ -31,3 +28,18 @@
     margin: 0;
   }
   
+  .end-total {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .line-item-property {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction:column;
+    gap: 30px;
+  }
+
+  .button-plus-qty {
+    margin-right: 30px;
+  }
