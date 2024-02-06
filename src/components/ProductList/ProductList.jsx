@@ -1,13 +1,13 @@
 import './ProductList.css'
 import ProductItem from '../ProductItem/productItem';
 
-export default function ProductList({ product, productAddToCart}) {
+export default function ProductList({ product, addToCart}) {
     console.log('ProductList props:', product);
     const products = product.map((product) => (
       <ProductItem 
         key={product._id} 
         product={product} 
-        productAddToCart={productAddToCart}/>
+        addToCart={addToCart}/>
     ));
   
     // console.log(products);

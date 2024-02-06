@@ -27,4 +27,10 @@ export async function getById(id) {
 }
 
 
+// Add an item to the cart
+export function productToCart(productId) {
+  // Just send itemId for best security (no pricing)
+  return sendRequest(`${BASE_URL}/cart/products/${productId}`, 'POST');
+}
+
 
