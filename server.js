@@ -8,8 +8,6 @@ require('dotenv').config();
 // Connect to the database
 require('./config/database');
 
-const Product = require('./models/product');
-
 
 const app = express();
 app.use(cors());

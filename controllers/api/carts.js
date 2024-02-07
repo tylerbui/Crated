@@ -8,19 +8,21 @@ module.exports = {
 }
 
 async function cart(req,res){
-    const cart = await Cart.getCart(req.user_id);
+    const cart = await Cart.getCart(req.user._id);
     res.json(cart);
 }
 
 async function productAddToCart(req,res) {
-    const cart = await Cart.getCart(req.user_id);
-    await cart.productAddToCart(req.params._id);
+    console.log('here');
+    const cart = await Cart.getCart(req.user._id);
+    console.log(cart);
+    await cart.productAddToCart(req.params.id);
     res.json(cart);
 }
 
 async function productQuantityChange(req,res) {
     const cart = await Cart.getCart(req.user._id);
-    await cart.setProductQuantity(req.body.itemId, req.body.newQty);
+    await cart.setProductQuantity(req.body.productId, req.body.newQty);
     res.json(cart);
 }
 

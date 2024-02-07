@@ -1,7 +1,7 @@
 import './productItem.css';
 
 
-export default function ProductItem({ product, addToCart}) {
+export default function ProductItem({ product, productAddToCart}) {
 
     const { name, description, price, category } = product;
   
@@ -13,7 +13,7 @@ export default function ProductItem({ product, addToCart}) {
           <span className="productPrice">Price: ${(price || 0).toFixed(2)}</span>
         </div>
         <div className="productCategory">Category:{category.name || 'No Category'}</div>
-        <button className="btn-product-cartadd" onClick={() => addToCart(product._id)}>
+        <button className="btn-product-cartadd" onClick={() => productAddToCart(product._id)}>
           Add to Cart 
         </button>
       </div>

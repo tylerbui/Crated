@@ -1,7 +1,7 @@
 import './LineItem.css';
-export default function LineItem({ product, isPaid, productQuantityChange }) {
+export default function LineItem({cart,product, isPaid, productQuantityChange }) {
   const { quantity, extPrice } = product || {};
-
+  
   return (
     <div className="LineItem">
       <div className="line-item-property">

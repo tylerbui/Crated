@@ -7,9 +7,10 @@ export default function cartDetail({cart,productQuantityChange,checkout}) {
 
     const lineItems = cart.lineItems.map(product =>
         <LineItem
+            cart={cart}
             lineItem={product}
             isPaid={cart.isPaid}
-            handleChangeQty={productQuantityChange}
+            productQuantityChange={productQuantityChange}
             key={product._id}
         />
     );
@@ -39,10 +40,13 @@ export default function cartDetail({cart,productQuantityChange,checkout}) {
                 CHECKOUT
               </button>
             )}
+            <span>{cart.totalQty}</span>
             <span className="totaly-quantity">{cart.totalQty}</span>
           </section>
         </>
       </div>
+      {/* added this to see if lineItem renders the new car stuff 2/7/2024 */}
+      {lineItems}
     </main>
     )
 }

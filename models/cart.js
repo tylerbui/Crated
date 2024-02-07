@@ -1,16 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const productSchema = require('./productSchema');
+const product = require('./product');
 
 const lineItemSchema = new Schema({
   qty: { type: Number, default: 1 },
-  product: productSchema
+  product: { type: Schema.Types.ObjectId, ref: 'Product' }
 }, {
   timestamps: true,
   toJSON: { virtuals: true }
 });
 
 lineItemSchema.virtual('extPrice').get(function() {
+  console.log(this.product)
   // 'this' keyword is bound to the lineItem document
   return this.qty * this.product.price;
 });
@@ -19,7 +21,7 @@ const cartSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   lineItems: [lineItemSchema],
   isPaid: { type: Boolean, default: false } 
@@ -47,27 +49,30 @@ cartSchema.statics.getCart = function(userId) {
     // update doc - provides values when inserting
     { user: userId, isPaid: false },
     // upsert option
-    { upsert: true, new: true }
-  );
+    { upsert: true, new: true },
+  ).populate('lineItems.product');
+
 };
 
-// Instance method for adding an item to a cart (unpaid order)
+// Instance method for adding an product to a cart (unpaid order)
 cartSchema.methods.productAddToCart = async function (productID) {
   // 'this' keyword is bound to the cart (order doc)
   const cart = this;
-  // Check if the item already exists in the cart
-  const lineItem = cart.lineItems.find(lineItem => lineItem.product._id.equals(productID));
+  // Check if the product already exists in the cart
+  const lineItem = cart.lineItems.find(lineItem => lineItem._id.equals(productID));
   if (lineItem) {
     // It already exists, so increase the qty
     lineItem.qty += 1;
   } else {
-    // Get the item from the "catalog"
+    // Get the product from the "catalog"
     // Note how the mongoose.model method behaves as a getter when passed one arg vs. two
-    const Product = mongoose.model('product');
+    const Product = mongoose.model('Product');
+    console.log('Product',productID);
     const product = await Product.findById(productID);
     // The qty of the new lineItem object being pushed in defaults to 1
     cart.lineItems.push({ product });
   }
+  
   // return the save() method's promise
   return cart.save();
 };
@@ -77,7 +82,7 @@ cartSchema.methods.setItemQty = function(productID, newQty) {
   // this keyword is bound to the cart (order doc)
   const cart = this;
   // Find the line item in the cart for the menu item
-  const lineItem = cart.lineItems.find(lineItem => lineItem.product._id.equals(productID));
+  const lineItem = cart.lineItems.find(lineItem => lineItem.product_id.equals(productID));
   if (lineItem && newQty <= 0) {
     // Calling deleteOne, removes the lineItem subdoc from the cart.lineItems array
     lineItem.deleteOne();
@@ -88,5 +93,6 @@ cartSchema.methods.setItemQty = function(productID, newQty) {
   // return the save() method's promise
   return cart.save();
 };
+
 
 module.exports = mongoose.model('Cart', cartSchema);
