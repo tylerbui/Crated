@@ -17,7 +17,7 @@ export default function cartDetail({cart,productQuantityChange,checkout}) {
     return(
         <main className="CartDetail">
       <h1>Cart Detail Page</h1>
-      <div className="cart-detail-info">
+      <div className="cart-detail-info"> 
         {cart.isPaid ? (
           <span>
             ORDER <span className="smaller">{cart.cartId}</span>
@@ -25,6 +25,8 @@ export default function cartDetail({cart,productQuantityChange,checkout}) {
         ) : (
           <span>NEW ORDER</span>
         )}
+      </div>
+      <div>
       </div>
       <div className="cart-detail-container-main-detail">
         <>
@@ -45,7 +47,6 @@ export default function cartDetail({cart,productQuantityChange,checkout}) {
           </section>
         </>
       </div>
-      {/* added this to see if lineItem renders the new car stuff 2/7/2024 */}
       {lineItems}
     </main>
     )

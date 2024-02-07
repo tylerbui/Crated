@@ -1,6 +1,6 @@
 import * as cartsAPI from '../../utilities/carts-api';
 import { useState, useRef, useEffect } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import CartDetail from '../../components/CartDetail/cartDetail';
 import Category from '../../components/Category/Category';
 import LineItem from '../../components/LineItem/LineItem';
@@ -22,10 +22,6 @@ export default function Cart({activeCat,setActiveCat,checkout}) {
     
 
       /* Event Handler*/
-      async function productAddToCart(productID){
-        const cartUpdate = await cartsAPI.productAddToCart(productID)
-        setCart(cartUpdate);
-      }
 
       async function productRemoveFromCart(productID){
         const removeFromCart = cart.products.findIndex(product => product.id === productID);
@@ -44,7 +40,7 @@ export default function Cart({activeCat,setActiveCat,checkout}) {
 
       async function handleCheckout() {
         await cartsAPI.checkout();
-        navigate('/orders');
+        navigate('/cartHistory');
       }
 
 
@@ -59,7 +55,6 @@ export default function Cart({activeCat,setActiveCat,checkout}) {
                 setActiveCat={setActiveCat}
               />
               </div>
-            <Link to="/products" className="button btn-sm">Products</Link>
             <CartDetail
               cart={cart} 
               productQuantityChange={productQuantityChange}
@@ -69,7 +64,7 @@ export default function Cart({activeCat,setActiveCat,checkout}) {
             <LineItem />
             <button className="checkout-button" onClick={() => handleCheckout(cart)}>
               CHECKOUT
-            </button>
+            </button>  
             </aside>
         </main>
     )

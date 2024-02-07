@@ -5,11 +5,12 @@ import ProductList from '../../components/ProductList/ProductList';
 import Category from '../../components/Category/Category';
 import {Link} from 'react-router-dom';
 import './Product.css';
-import { productAddToCart } from '../../utilities/carts-api';
+import * as cartsAPI from '../../utilities/carts-api';
 
 export default function Product() {
     const [product,setProduct] = useState([]);
     const [activeCat, setActiveCat] = useState('');
+    const [cart, setCart] = useState(null);
     const categoriesRef  = useRef();
 
 
@@ -19,6 +20,8 @@ export default function Product() {
           try {
             const products = await productAPI.getAllProducts();
             categoriesRef.current = [...new Set(products.map(product => product.category.name))];
+            const fetchCart = await cartsAPI.getCart();
+            setCart(fetchCart);
             setProduct(products);
             setActiveCat(categoriesRef.current[0]);
           } catch (error) {
@@ -28,6 +31,10 @@ export default function Product() {
         })();
       }, []);
       
+      async function productAddToCart(productID){
+        const cartUpdate = await cartsAPI.productAddToCart(productID)
+        setCart(cartUpdate);
+      }
 
     return(
         <main className="Product">
